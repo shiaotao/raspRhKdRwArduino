@@ -1,5 +1,9 @@
 #include <Servo.h>
 
+const int full_t1 = 7;
+const int full_t2 = 8;
+const int full_t3 = 9;
+const int full_t4 = 11;
 Servo servo_cir;    //创建一个舵机控制对象,使用Servo类最多可以控制8个舵机
 Servo servo_put;
 //int pos = 0;        // 该变量用与存储舵机角度位置
@@ -8,6 +12,10 @@ char var;
 
 void setup() {
   // put your setup code here, to run once:
+  pinMode(full_t1, INPUT);
+  pinMode(full_t2, INPUT);
+  pinMode(full_t3, INPUT);
+  pinMode(full_t4, INPUT);
   servo_cir.attach(5);  // 该舵机由arduino第5脚控制
   servo_put.attach(6);
   Serial.begin(9600);
@@ -28,8 +36,8 @@ void loop() {
     }else if(var == '3') {
       put_in(180);
     }
-
-}
+    
+  }
   //while(Serial.available()>0)
     //Serial.read();
 }
@@ -40,25 +48,34 @@ void put_in(int anagle) {
   int pos = 0;
   for(pos = 0; pos < anagle;) {  // 从0度到180度运动
         servo_cir.write(pos);   // 指定舵机转向的角度
-        delay(15);  // 等待15ms让舵机到达指定位置
+        delay(9);               // 等待15ms让舵机到达指定位置
         pos += 1;
   }
-  for(pos = 90; pos > 0;) {  // 从0度到180度运动
-        servo_put.write(pos);   // 指定舵机转向的角度
-        delay(15);  // 等待15ms让舵机到达指定位置
+  for(pos = 90; pos > 0;) {
+        servo_put.write(pos);
+        delay(9);
         pos -= 1;
   }
-  for(pos = 0; pos < 90;) {  // 从0度到180度运动
-        servo_put.write(pos);   // 指定舵机转向的角度
-        delay(15);  // 等待15ms让舵机到达指定位置
+  for(pos = 0; pos < 90;) {
+        servo_put.write(pos);
+        delay(9);
         pos += 1;
   }
   delay(900);
-  for(pos = anagle; pos > 0;) {  // 从0度到180度运动
-        servo_cir.write(pos);   // 指定舵机转向的角度
-        delay(15);  // 等待15ms让舵机到达指定位置
+  for(pos = anagle; pos > 0;) {
+        servo_cir.write(pos);
+        delay(9);
         pos -= 1;
-  }   
+  }
+  delay(9);
+  Serial.print("**");
+  Serial.print(digitalRead(full_t1));
+  Serial.print(digitalRead(full_t2));
+  Serial.print(digitalRead(full_t3));
+  Serial.print(digitalRead(full_t4));
+  Serial.println("**");
+  //tf1 = digitalRead(full_t1);
+  delay(9);
 }
 /*void loop()
 {
