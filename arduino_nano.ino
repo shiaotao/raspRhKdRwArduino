@@ -1,9 +1,7 @@
 #include <Servo.h>
 
 const int full_t1 = 7;
-const int full_t2 = 8;
-const int full_t3 = 9;
-const int full_t4 = 11;
+
 Servo servo_cir;    //创建一个舵机控制对象,使用Servo类最多可以控制8个舵机
 Servo servo_put;
 //int pos = 0;        // 该变量用与存储舵机角度位置
@@ -13,9 +11,7 @@ char var;
 void setup() {
   // put your setup code here, to run once:
   pinMode(full_t1, INPUT);
-  pinMode(full_t2, INPUT);
-  pinMode(full_t3, INPUT);
-  pinMode(full_t4, INPUT);
+
   servo_cir.attach(5);  // 该舵机由arduino第5脚控制
   servo_put.attach(6);
   Serial.begin(9600);
@@ -53,15 +49,27 @@ void put_in(int anagle) {
   }
   for(pos = 90; pos > 0;) {
         servo_put.write(pos);
+        delay(12);
+        pos -= 1;
+  }
+  delay(333);
+  for(pos = 0; pos < 60;) {
+        servo_put.write(pos);
+        delay(6);
+        pos += 1;
+  }
+  for(pos = 60; pos > 0;) {
+        servo_put.write(pos);
         delay(9);
         pos -= 1;
   }
+  delay(666);
   for(pos = 0; pos < 90;) {
         servo_put.write(pos);
         delay(9);
         pos += 1;
   }
-  delay(900);
+  delay(99);
   for(pos = anagle; pos > 0;) {
         servo_cir.write(pos);
         delay(9);
@@ -70,10 +78,8 @@ void put_in(int anagle) {
   delay(9);
   Serial.print("**");
   Serial.print(digitalRead(full_t1));
-  Serial.print(digitalRead(full_t2));
-  Serial.print(digitalRead(full_t3));
-  Serial.print(digitalRead(full_t4));
-  Serial.println("**");
+
+  Serial.println("---**");
   //tf1 = digitalRead(full_t1);
   delay(9);
 }
